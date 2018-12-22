@@ -1,0 +1,1 @@
+WARNING:root: colorfile.txt Does not exist

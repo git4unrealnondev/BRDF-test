@@ -1,0 +1,17 @@
+confused.png_B.PNG
+confused.png_G.PNG
+confused.png_R.PNG
+confused_TRUEBW.PNG
+cool.png_B.PNG
+cool.png_G.PNG
+cool.png_R.PNG
+cool_TRUEBW.PNG
+eek.png_B.PNG
+eek.png_G.PNG
+eek.png_R.PNG
+eek_TRUEBW.PNG
+evil.png_B.PNG
+evil.png_G.PNG
+evil.png_R.PNG
+evil_TRUEBW.PNG
+0_FINAL_
