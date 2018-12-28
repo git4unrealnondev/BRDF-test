@@ -203,12 +203,8 @@ def BWCalc(src,CusCount,PassVar,height,width,FW,IntialCount):
 				c=0
 				print (a)
 				print (z)
-				F = np.linalg.lstsq(a, z, rcond=-1)
-			#	for eff in b:
-			#		print (eff)
-			#		input ('eff')
-			#		F = np.linalg.lstsq(a, z, rcond=-1)
-			#		c+=1
+				F = np.linalg.lstsq(a, z,rcond=-1)
+				print (F)
 				c=0
 				temp = []
 				for eff in F[3]:

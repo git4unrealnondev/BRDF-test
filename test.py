@@ -1,7 +1,12 @@
 import numpy as np
-a = np.array([[.988767, -.55, .45], [.8888, -.9548754, .45], [.9875, -.93, .45], [.78978876, -.76, .45]])
-b = np.array([255,233,211,55])
-x = np.linalg.lstsq(a, b, rcond=0)
+# coefficient matrix 
+A = np.array([[1, 2, -1], [2, 1, 1], [1, 2, 1]])
+
+# numbers on the right without variables
+b = np.array([4, -2, 2])
+
+# solve using np.linagl.solve()
+print (np.linalg.lstsq(A, b)[0])
 c=0
 temp = []
 for eff in x[3]:
