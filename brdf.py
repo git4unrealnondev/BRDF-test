@@ -152,8 +152,8 @@ def LinEqc(templist):
 		return
 
 def ReverseFind(x,y,height,width):
-	tempfloor = x * width
-	floor = tempfloor + y
+	tempfloor = int(x) * int(width)
+	floor = int(tempfloor) + int(y)
 	return floor
 
 def Replace(str): 
@@ -176,6 +176,7 @@ def BWCalc(src,CusCount,PassVar,height,width,FW,IntialCount):
 	temp1=[]
 	test=[]
 	n=[]
+	final=[]
 	countz=0
 	height,width,channel = GetImageDimensions(FW[IntialCount])
 	Count = len(FW)
@@ -186,57 +187,57 @@ def BWCalc(src,CusCount,PassVar,height,width,FW,IntialCount):
 			for y in range(width):
 				ListLookup = ReverseFind(x,y,height,width)
 				CurrentInt = ([item[ListLookup] for item in CusCount])
+				print (CurrentInt)
 				countz=0
 				a=[]
 				b=[]
 				for egs in FW:
-					#b = (CusCount[countz][ListLookup])
 					b.append([CusCount[countz][ListLookup]])
-					#b = np.array([b])
-					a.append([LDR_Final[countz][0],LDR_Final[countz][1],LDR_Final[countz][2]])
-					#a.append[[LDR_Final[countz][0]],[LDR_Final[countz][1]],[LDR_Final[countz][2]]]
-					
-					#x = np.linalg.lstsq(a, b, rcond=None)[0]
-					#x = np.linalg.solve(a, b)
+					a.append([float(LDR_Final[countz][0]),float(LDR_Final[countz][1]),float(LDR_Final[countz][2])])
 					countz +=1
-				print (a,b)
-				#x = np.linalg.solve(a, b)
-				print (len(a)-1)
 				c = 0
 				z = []
 				for eff in b:
 					z.append(b[c][0])
 					c+=1
-				print (z)
 				c=0
-				for eff in b:
-					x = np.linalg.lstsq(a, z, rcond=-1)
-					c+=1
+				print (a)
+				print (z)
+				F = np.linalg.lstsq(a, z, rcond=-1)
+			#	for eff in b:
+			#		print (eff)
+			#		input ('eff')
+			#		F = np.linalg.lstsq(a, z, rcond=-1)
+			#		c+=1
 				c=0
 				temp = []
-				for eff in x[3]:
-					temp.append(x[3][c])
+				for eff in F[3]:
+					temp.append(F[3][c])
 					c +=1
-
-				print (temp)
-			
+				final.append(temp)
+				print (final)
 				input ('pause')
+	return final
 	
+def NormalizeArray(final):
+	test = []
+	finalz = []
+	for eff in final:
+		print (eff)
+		maxval = max(eff)
+		temp = 255 / max(eff)
+		maxval = maxval * temp
+		maxz = max(eff)
+		eff.remove(maxz)
+		test = []
+		for efz in eff:
+			test.append(efz * temp)
+			print (test)
+		test.insert(0,maxval)
+		print (test)
+		finalz.append(test)
 	
-	
-	
-
-		
-				#for Li in LDR_Final:
-					#ld1=
-					#print (Li[0][0])
-	#while countzz<len(LDR_Final):
-	#	countz = 0
-	#	temp = []
-	#	while countz<3:
-	#		rest = float(LDR_Final[int(countzz)][int(countz)])
-		
-	return 
+	return finalz
 def WriteBWImage(FW,IntialCount,CusCount):
 	CusCount = CusCount
 	PassVar = FW[IntialCount]
@@ -245,8 +246,9 @@ def WriteBWImage(FW,IntialCount,CusCount):
 	ColorFile.close()
 	srct = cv2.imread(FW[IntialCount], 0)
 	height,width,channel = GetImageDimensions(FW[IntialCount])
-	
-	BWCalc(srct,CusCount,PassVar,height,width,FW,IntialCount)
+	print (FW)
+	final = BWCalc(srct,CusCount,PassVar,height,width,FW,IntialCount)
+	final = NormalizeArray(final)
 	#for x in range (height):
 	#			for y in range(width):
 	#				INTEN = BWCalc(srct,x,y,CusCount,PassVar,height,width,FW)
@@ -284,7 +286,6 @@ def MakeArray(Files):
 		for templ in FilteredWords:
 			templist = []
 			img = cv2.imread(templ)
-			print (templ)
 			for x in range (height):
 				for y in range(width):
 					nm,nn,nb = img[x,y]
